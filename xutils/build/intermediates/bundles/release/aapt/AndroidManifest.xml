@@ -2,8 +2,8 @@
 <manifest
     package="org.xutils"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="20160424"
-    android:versionName="3.3.34" >
+    android:versionCode="20160613"
+    android:versionName="3.3.36" >
 
     <uses-sdk
         android:minSdkVersion="14"
