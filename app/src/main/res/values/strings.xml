@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">YoApp管理</string>
+    <string name="action_manage">管理</string>
+    <string name="action_recommend">推荐</string>
+    <string name="action_settings">设置</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+</resources>
