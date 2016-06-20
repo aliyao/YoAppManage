@@ -1,12 +1,28 @@
 package com.yoyo.yoappmanage.module.manage.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yoyo.common.view.RefreshLayout;
+import com.yoyo.common.view.SpaceItemDecoration;
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseFragment;
+import com.yoyo.yoappmanage.config.AppConfig;
+import com.yoyo.yoappmanage.entity.ManageInfoEntity;
+import com.yoyo.yoappmanage.module.manage.adapter.ManageAdapter;
+import com.yoyo.yoappmanage.module.manage.utils.AppInfoProvider;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 项目名称：YoAppManage
@@ -18,19 +34,14 @@ import com.yoyo.yoappmanage.base.BaseFragment;
  * 修改备注：
  */
 public class ManageFragment extends BaseFragment {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
+    @BindView(R.id.refresh_layout) RefreshLayout refreshLayout;
+    @BindView(R.id.recycler_view)  RecyclerView recyclerView;
+    ManageAdapter manageAdapter;
+
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public ManageFragment() {
     }
-
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static ManageFragment newInstance(int sectionNumber) {
         ManageFragment fragment = new ManageFragment();
         Bundle args = new Bundle();
@@ -43,8 +54,73 @@ public class ManageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_manage, container, false);
-       // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-       // textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+        ButterKnife.bind(this, rootView);
+        init();
         return rootView;
+    }
+
+
+    @Override
+    protected void init() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                refreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshAdapter();
+                    }
+                }, AppConfig.RefreshViewTime);
+            }
+        });
+
+        recyclerView.setHasFixedSize(true);
+        //设置布局管理器
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        List<ManageInfoEntity> list=getNotSystemAppInfo();
+        manageAdapter = new ManageAdapter(list);
+        //passwordAdapter.setOnRecyclerViewListener(this);
+        //设置adapter
+        recyclerView.setAdapter(manageAdapter);
+        //设置Item增加、移除动画
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //添加分割线
+         /*   recyclerViewPassword.addItemDecoration(new DividerItemDecoration(
+                    getActivity(), DividerItemDecoration.HORIZONTAL_LIST));*/
+
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space_item_decoration);
+        recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+        // textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+    }
+
+    public void refreshAdapter() {
+        List<ManageInfoEntity> list=getNotSystemAppInfo();
+        manageAdapter.setmData(list);
+        manageAdapter.notifyDataSetChanged();
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
+    }
+
+    /**
+     * 获取非系统APP信息
+     * @return
+     */
+    private List<ManageInfoEntity> getNotSystemAppInfo(){
+        AppInfoProvider appInfoProvider=new AppInfoProvider(getContext());
+        List<ManageInfoEntity> listResult=appInfoProvider.getAllApps();
+        List<ManageInfoEntity> listDel=new ArrayList<>();
+        for (ManageInfoEntity manageInfoEntity:
+        listResult ) {
+            if(manageInfoEntity.isSystemApp()){
+                listDel.add(manageInfoEntity);
+            }
+        }
+        if(!listDel.isEmpty()){
+            listResult.removeAll(listDel);
+        }
+        return listResult;
     }
 }

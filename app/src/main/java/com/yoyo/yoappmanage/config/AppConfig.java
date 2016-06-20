@@ -10,4 +10,5 @@ package com.yoyo.yoappmanage.config;
  * 修改备注：
  */
 public class AppConfig {
+    public final static long RefreshViewTime = 500;//毫秒
 }

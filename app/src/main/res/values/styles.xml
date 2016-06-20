@@ -34,4 +34,17 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="progressStyleListViewFooter">
+        　　
+        <item name="android:indeterminateDrawable">@drawable/listview_footer_progress_large</item>
+        　　
+        <item name="android:minWidth">76dip</item>
+        　　
+        <item name="android:maxWidth">76dip</item>
+        　　
+        <item name="android:minHeight">76dip</item>
+        　　
+        <item name="android:maxHeight">76dip</item>
+    </style>
+
 </resources>

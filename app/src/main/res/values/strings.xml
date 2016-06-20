@@ -3,5 +3,5 @@
     <string name="action_manage">管理</string>
     <string name="action_recommend">推荐</string>
     <string name="action_settings">设置</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="refresh_loading">正在加载</string>
 </resources>

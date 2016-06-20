@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:layout_marginLeft="@dimen/space_item_x"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/font_color_79"
+            android:textSize="@dimen/title_text_size"
+            />
+
+        <TextView
+            android:id="@+id/tv_packagename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:text="com.yoyo.YoAppManage"
+            android:layout_marginTop="@dimen/space_item"
+            android:textColor="@color/font_color_dc"
+            android:textSize="@dimen/text_size_m"
+            />
+
+        <TextView
+            android:id="@+id/tv_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_packagename"
+            android:layout_marginTop="@dimen/space_item"
+            android:textColor="@color/font_color_9c"
+            android:textSize="@dimen/content_text_size"
+            android:text="好用 好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用" />
+
+    </LinearLayout>
+</RelativeLayout>
