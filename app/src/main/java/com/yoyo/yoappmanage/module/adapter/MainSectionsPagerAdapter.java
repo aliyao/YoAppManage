@@ -1,4 +1,4 @@
-package com.yoyo.yoappmanage.module.manage.adapter;
+package com.yoyo.yoappmanage.module.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.module.manage.fragment.ManageFragment;
-import com.yoyo.yoappmanage.module.manage.fragment.RecommendFragment;
+import com.yoyo.yoappmanage.module.recommend.fragment.RecommendFragment;
 
 /**
  * 项目名称：YoAppManage

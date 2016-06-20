@@ -1,4 +1,4 @@
-package com.yoyo.yoappmanage.module;
+package com.yoyo.yoappmanage.base;
 
 import android.support.v7.app.AppCompatActivity;
 

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yoyo.yoappmanage.R;
-import com.yoyo.yoappmanage.module.BaseFragment;
+import com.yoyo.yoappmanage.base.BaseFragment;
 
 /**
  * 项目名称：YoAppManage
