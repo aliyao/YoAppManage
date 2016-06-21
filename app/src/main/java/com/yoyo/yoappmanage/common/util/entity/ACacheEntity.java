@@ -15,6 +15,7 @@ public class ACacheEntity {
     int firstOpen;//1第一次打开
     String checkPassword;
     String randomCode;
+    String rootPath;
 
     public String getOpenId() {
         return openId;
@@ -54,5 +55,13 @@ public class ACacheEntity {
 
     public void setRandomCode(String randomCode) {
         this.randomCode = randomCode;
+    }
+
+    public String getRootPath() {
+        return rootPath;
+    }
+
+    public void setRootPath(String rootPath) {
+        this.rootPath = rootPath;
     }
 }

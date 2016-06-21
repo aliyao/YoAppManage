@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 
 import com.yoyo.yoappmanage.entity.ManageInfoEntity;
 
@@ -36,7 +37,7 @@ public class AppInfoProvider {
         List<ManageInfoEntity> list = new ArrayList<ManageInfoEntity>();
         ManageInfoEntity myAppInfo;
         //获取到所有安装了的应用程序的信息，包括那些卸载了的，但没有清除数据的应用程序
-        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(PackageManager.GET_SIGNATURES);
         for (PackageInfo info : packageInfos) {
             myAppInfo = new ManageInfoEntity();
             //拿到包名
@@ -52,9 +53,17 @@ public class AppInfoProvider {
             String appName = appInfo.loadLabel(packageManager).toString();
             myAppInfo.setPackageName(packageName);
             myAppInfo.setName(appName);
-           // myAppInfo.setIcon(icon);
+            // myAppInfo.setIcon(icon);
             myAppInfo.setVersionName(info.versionName);
             myAppInfo.setVersionCode(info.versionCode);
+
+            String packagePath = appInfo.sourceDir;
+            if (TextUtils.isEmpty(packagePath)) {
+                // 一般来说，这两个属性的值和上面的属性的值相同
+                packagePath = appInfo.publicSourceDir;
+            }
+            myAppInfo.setPackagePath(packagePath);
+
             //myAppInfo.setLabelRes(info.describeContents());
             //myAppInfo.setLabelRes(info.sharedUserLabel);
             if (filterApp(appInfo)) {

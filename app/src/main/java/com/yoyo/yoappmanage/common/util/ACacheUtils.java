@@ -84,6 +84,19 @@ public class ACacheUtils {
         String encryptOpenId= MD5Util.MD5ExamNum(openId,AppConfig.APP_MD5_USER_INFO_KEY);
         return encryptOpenId;
     }
+
+    public static String getRootPath(Context mContext){
+        ACacheEntity mACacheEntity = getACacheEntityInstance(mContext);
+        String rootPath = mACacheEntity.getRootPath();
+        return rootPath;
+    }
+
+    public static void setRootPath(Context mContext, String rootPath) {
+        ACacheEntity mACacheEntity = getACacheEntityInstance(mContext);
+        mACacheEntity.setRootPath(rootPath);
+        setACacheEntity(mContext, mACacheEntity);
+    }
+
     public static void setCheckPassword(Context mContext, String checkPassword) {
         ACacheEntity mACacheEntity = getACacheEntityInstance(mContext);
         mACacheEntity.setCheckPassword(checkPassword);

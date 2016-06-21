@@ -30,6 +30,8 @@ public class ManageInfoEntity {
     String versionName;//版本名字
     @Column(name="versionCode")
     long versionCode;//版本号
+    @Column(name="packagePath")
+    String packagePath;
 
     public int getIcon() {
         return icon;
@@ -85,5 +87,13 @@ public class ManageInfoEntity {
 
     public void setVersionCode(long versionCode) {
         this.versionCode = versionCode;
+    }
+
+    public String getPackagePath() {
+        return packagePath;
+    }
+
+    public void setPackagePath(String packagePath) {
+        this.packagePath = packagePath;
     }
 }
