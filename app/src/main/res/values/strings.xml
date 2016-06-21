@@ -4,4 +4,8 @@
     <string name="action_recommend">推荐</string>
     <string name="action_settings">设置</string>
     <string name="refresh_loading">正在加载</string>
+    <string name="version_tip">版本</string>
+
+    <string name="btn_ok">确定</string>
+    <string name="btn_cancle">取消</string>
 </resources>

@@ -55,7 +55,7 @@ public class AppInfoProvider {
            // myAppInfo.setIcon(icon);
             myAppInfo.setVersionName(info.versionName);
             myAppInfo.setVersionCode(info.versionCode);
-            myAppInfo.setLabelRes(info.describeContents());
+            //myAppInfo.setLabelRes(info.describeContents());
             //myAppInfo.setLabelRes(info.sharedUserLabel);
             if (filterApp(appInfo)) {
                 myAppInfo.setSystemApp(false);

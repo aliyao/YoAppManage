@@ -18,8 +18,8 @@ import java.util.Date;
 public class ManageInfoEntity {
     @Column(name="icon")
     public int icon ;//获得该资源图片在 R 文件中的值 (对应于 android:icon 属性)
-    @Column(name="labelRes")
-    public int labelRes;// 获得该 label 在 R 文件中的值 (对应于 android:label 属性)
+   /* @Column(name="labelRes")
+    public int labelRes;// 获得该 label 在 R 文件中的值 (对应于 android:label 属性)*/
     @Column(name="name")
     public String name;// 获得该节点的 name 值 (对应于 android:name 属性)
     @Column(name="packageName",isId = true)
@@ -39,13 +39,13 @@ public class ManageInfoEntity {
         this.icon = icon;
     }
 
-    public int getLabelRes() {
+   /* public int getLabelRes() {
         return labelRes;
     }
 
     public void setLabelRes(int labelRes) {
         this.labelRes = labelRes;
-    }
+    }*/
 
     public String getName() {
         return name;

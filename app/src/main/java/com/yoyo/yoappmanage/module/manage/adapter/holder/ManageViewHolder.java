@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseRecyclerViewViewHolder;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,8 +27,12 @@ public class ManageViewHolder extends BaseRecyclerViewViewHolder {
     public TextView tv_name;
     @BindView(R.id.tv_packagename)
     public TextView tv_packagename;
-    @BindView(R.id.tv_label)
-    public TextView tv_label;
+   /* @BindView(R.id.tv_label)
+    public TextView tv_label;*/
+    @BindView(R.id.tv_version_name)
+    public TextView tv_version_name;
+    @BindString(R.string.version_tip)
+    public String version_tip;
 
     public ManageViewHolder(View itemView) {
         super(itemView);

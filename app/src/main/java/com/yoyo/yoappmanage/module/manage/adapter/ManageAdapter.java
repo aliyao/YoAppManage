@@ -46,6 +46,7 @@ public class ManageAdapter extends BaseAdapter<ManageInfoEntity, ManageViewHolde
         //holder.iv_icon;
         holder.tv_name.setText(manageInfo.getName());
         holder.tv_packagename.setText(manageInfo.getPackageName());
-        holder.tv_label.setVisibility(View.GONE);
+        holder.tv_version_name.setText(holder.version_tip+" "+manageInfo.getVersionName());
+       // holder.tv_label.setVisibility(View.GONE);
     }
 }

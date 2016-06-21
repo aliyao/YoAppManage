@@ -89,8 +89,8 @@ public class ManageFragment extends BaseFragment {
          /*   recyclerViewPassword.addItemDecoration(new DividerItemDecoration(
                     getActivity(), DividerItemDecoration.HORIZONTAL_LIST));*/
 
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space_item_decoration);
-        recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+       // int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space_item_decoration);
+        //recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         // textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
     }
