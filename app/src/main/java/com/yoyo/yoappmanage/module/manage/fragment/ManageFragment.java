@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yoyo.common.view.RefreshLayout;
-import com.yoyo.common.view.SpaceItemDecoration;
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseFragment;
 import com.yoyo.yoappmanage.config.AppConfig;
@@ -23,6 +22,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * 项目名称：YoAppManage
@@ -34,14 +38,17 @@ import butterknife.ButterKnife;
  * 修改备注：
  */
 public class ManageFragment extends BaseFragment {
-    @BindView(R.id.refresh_layout) RefreshLayout refreshLayout;
-    @BindView(R.id.recycler_view)  RecyclerView recyclerView;
+    @BindView(R.id.refresh_layout)
+    RefreshLayout refreshLayout;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     ManageAdapter manageAdapter;
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public ManageFragment() {
     }
+
     public static ManageFragment newInstance(int sectionNumber) {
         ManageFragment fragment = new ManageFragment();
         Bundle args = new Bundle();
@@ -78,7 +85,7 @@ public class ManageFragment extends BaseFragment {
         recyclerView.setHasFixedSize(true);
         //设置布局管理器
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        List<ManageInfoEntity> list=getNotSystemAppInfo();
+        List<ManageInfoEntity> list = getNotSystemAppInfo();
         manageAdapter = new ManageAdapter(list);
         //passwordAdapter.setOnRecyclerViewListener(this);
         //设置adapter
@@ -89,37 +96,50 @@ public class ManageFragment extends BaseFragment {
          /*   recyclerViewPassword.addItemDecoration(new DividerItemDecoration(
                     getActivity(), DividerItemDecoration.HORIZONTAL_LIST));*/
 
-       // int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space_item_decoration);
+        // int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space_item_decoration);
         //recyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
         // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         // textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
     }
 
     public void refreshAdapter() {
-        List<ManageInfoEntity> list=getNotSystemAppInfo();
-        manageAdapter.setmData(list);
-        manageAdapter.notifyDataSetChanged();
-        if (refreshLayout.isRefreshing()) {
-            refreshLayout.setRefreshing(false);
-        }
+        //刷新PagerAdapter
+        Observable.create(new Observable.OnSubscribe<List<ManageInfoEntity>>() {
+            @Override
+            public void call(Subscriber<? super List<ManageInfoEntity>> subscriber) {
+                List<ManageInfoEntity> listResult = getNotSystemAppInfo();
+                subscriber.onNext(listResult);
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<ManageInfoEntity>>() {
+                    @Override
+                    public void call(List<ManageInfoEntity> list) {
+                        manageAdapter.setmData(list);
+                        manageAdapter.notifyDataSetChanged();
+                        if (refreshLayout.isRefreshing()) {
+                            refreshLayout.setRefreshing(false);
+                        }
+                    }
+                });
     }
 
     /**
      * 获取非系统APP信息
+     *
      * @return
      */
-    private List<ManageInfoEntity> getNotSystemAppInfo(){
-        AppInfoProvider appInfoProvider=new AppInfoProvider(getContext());
-        List<ManageInfoEntity> listResult=appInfoProvider.getAllApps();
-        List<ManageInfoEntity> listDel=new ArrayList<>();
-        for (ManageInfoEntity manageInfoEntity:
-        listResult ) {
-            if(manageInfoEntity.isSystemApp()){
-                listDel.add(manageInfoEntity);
+    private List<ManageInfoEntity> getNotSystemAppInfo() {
+        AppInfoProvider appInfoProvider = new AppInfoProvider(getContext());
+        List<ManageInfoEntity> listAllApps = appInfoProvider.getAllApps();
+        List<ManageInfoEntity> listResult = new ArrayList<>();
+        for (ManageInfoEntity manageInfoEntity :
+                listAllApps) {
+            if (!manageInfoEntity.isSystemApp()) {
+                listResult.add(manageInfoEntity);
             }
-        }
-        if(!listDel.isEmpty()){
-            listResult.removeAll(listDel);
         }
         return listResult;
     }

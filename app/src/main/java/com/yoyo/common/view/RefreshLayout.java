@@ -12,10 +12,11 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 import com.yoyo.yoappmanage.R;
+import com.yoyo.yoappmanage.config.AppConfig;
 
 /**
  * 继承自SwipeRefreshLayout,从而实现滑动到底部时上拉加载更多的功能.
- *
+ * 
  * @author mrsimple
  */
 public class RefreshLayout extends SwipeRefreshLayout implements OnScrollListener {
@@ -92,18 +93,18 @@ public class RefreshLayout extends SwipeRefreshLayout implements OnScrollListene
      */
     private void getListView() {
         int childs = RefreshLayout.this.getChildCount();
-
+       
         if (childs > 0) {
-
+        	
             View childView = RefreshLayout.this.getChildAt(0);
              if (childView instanceof ListView) {
-
+            
                 mListView = (ListView) childView;
                 // 设置滚动监听器给ListView, 使得滚动的情况下也可以自动加载
                 mListView.setOnScrollListener(this);
                // Log.d(VIEW_LOG_TAG, "### 找到listview");
             }else  if (RefreshLayout.this.getChildAt(1)!=null&&RefreshLayout.this.getChildAt(1) instanceof ListView) {
-
+            
                 mListView = (ListView) RefreshLayout.this.getChildAt(1);
                 // 设置滚动监听器给ListView, 使得滚动的情况下也可以自动加载
                 mListView.setOnScrollListener(this);
@@ -146,7 +147,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements OnScrollListene
 
     /**
      * 是否可以加载更多, 条件是到了最底部, listview不在加载中, 且为上拉操作.
-     *
+     * 
      * @return
      */
     private boolean canLoad() {
@@ -158,14 +159,9 @@ public class RefreshLayout extends SwipeRefreshLayout implements OnScrollListene
      */
     private boolean isBottom() {
         int limitSize = limitRefreshSize;
-        if(limitSize==-1){
-            if (mListView != null) {
-                limitSize = mListView.getAdapter().getCount() - 2;
-                if(limitSize>10){
-                    limitSize=10;
-                }
-            }
-        }
+        /*if(limitSize==-1){
+            limitSize = AppConfig.minPageSize;
+        }*/
         if (mListView != null && mListView.getAdapter() != null&&mListView.getAdapter().getCount()>=limitSize) {
             return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount() - 1);
         }
@@ -174,14 +170,14 @@ public class RefreshLayout extends SwipeRefreshLayout implements OnScrollListene
 
     /**
      * 是否是上拉操作
-     *
+     * 
      * @return
      */
    public boolean isPullUp() {
 	   //PrintlnOrLog.MyLogE("isPullUp--"+mYDown +"--"+ mLastY+"--"+mTouchSlop);
         return (mYDown - mLastY)>= mTouchSlop&&mLastY>0;
     }
-
+   
 
     /**
      * 如果到了最底部,而且是上拉操作.那么执行onLoad方法
@@ -260,7 +256,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements OnScrollListene
 
     /**
      * 加载更多的监听器
-     *
+     * 
      * @author mrsimple
      */
     public static interface OnLoadListener {
