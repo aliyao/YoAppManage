@@ -164,8 +164,7 @@ public class CollectFragment extends BaseFragment implements OnBaseRecyclerViewL
                                 Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
                                     @Override
                                     public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
-                                        RxJavaTodoEntity rxJavaTodoEntity = null;
-                                        rxJavaTodoEntity = install(collectAdapter.getItem(position));
+                                        RxJavaTodoEntity rxJavaTodoEntity = install(collectAdapter.getItem(position));
                                         subscriber.onNext(rxJavaTodoEntity);
                                         subscriber.onCompleted();
                                     }
@@ -189,10 +188,8 @@ public class CollectFragment extends BaseFragment implements OnBaseRecyclerViewL
                                 delectInstall(collectAdapter.getItem(position));
                                 break;
                         }
-
                     }
                 }
-
         );
         return false;
     }
