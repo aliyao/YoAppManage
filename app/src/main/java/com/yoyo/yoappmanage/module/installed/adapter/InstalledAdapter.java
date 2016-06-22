@@ -42,11 +42,11 @@ public class InstalledAdapter extends BaseAdapter<InstalledInfoEntity, Installed
     @Override
     public void onBindViewHolder(InstalledViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        InstalledInfoEntity manageInfo = getItem(position);
-        //holder.iv_icon;
-        holder.tv_name.setText(manageInfo.getName());
-        holder.tv_packagename.setText(manageInfo.getPackageName());
-        holder.tv_version_name.setText(holder.version_tip+" "+manageInfo.getVersionName());
+        InstalledInfoEntity installedInfoEntity = getItem(position);
+        holder.iv_icon.setImageDrawable(installedInfoEntity.getIcon());
+        holder.tv_name.setText(installedInfoEntity.getName());
+        holder.tv_packagename.setText(installedInfoEntity.getPackageName());
+        holder.tv_version_name.setText(holder.version_tip+" "+installedInfoEntity.getVersionName());
        // holder.tv_label.setVisibility(View.GONE);
     }
 }

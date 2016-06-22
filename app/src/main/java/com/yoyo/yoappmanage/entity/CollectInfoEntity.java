@@ -14,8 +14,8 @@ import org.xutils.db.annotation.Table;
  */
 @Table(name = "CollectInfoEntity")
 public class CollectInfoEntity {
-    @Column(name="icon")
-    public int icon ;//获得该资源图片在 R 文件中的值 (对应于 android:icon 属性)
+    @Column(name="iconPath")
+    public String iconPath ;//获得该资源图片在 R 文件中的值 (对应于 android:icon 属性)
    /* @Column(name="labelRes")
     public int labelRes;// 获得该 label 在 R 文件中的值 (对应于 android:label 属性)*/
     @Column(name="name")
@@ -35,8 +35,8 @@ public class CollectInfoEntity {
 
     }
 
-    public CollectInfoEntity(int icon,String name,String packageName, String versionName,long versionCode,String apkSystemPath, String apkPath){
-        this.icon=icon;
+    public CollectInfoEntity(String iconPath,String name,String packageName, String versionName,long versionCode,String apkSystemPath, String apkPath){
+        this.iconPath=iconPath;
         this.name=name;
         this.packageName=packageName;
         this.versionName=versionName;
@@ -45,15 +45,15 @@ public class CollectInfoEntity {
         this.apkPath=apkPath;
     }
 
-    public int getIcon() {
-        return icon;
+    public String getIconPath() {
+        return iconPath;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 
-   /* public int getLabelRes() {
+    /* public int getLabelRes() {
         return labelRes;
     }
 

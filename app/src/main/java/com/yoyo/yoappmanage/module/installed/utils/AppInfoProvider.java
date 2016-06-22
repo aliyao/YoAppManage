@@ -53,7 +53,7 @@ public class AppInfoProvider {
             String appName = appInfo.loadLabel(packageManager).toString();
             myAppInfo.setPackageName(packageName);
             myAppInfo.setName(appName);
-            // myAppInfo.setIcon(icon);
+             myAppInfo.setIcon(icon);
             myAppInfo.setVersionName(info.versionName);
             myAppInfo.setVersionCode(info.versionCode);
 

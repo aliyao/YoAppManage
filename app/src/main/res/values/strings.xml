@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">YoApp管理</string>
-    <string name="action_installed">已安装</string>
+    <string name="action_installed">安装</string>
     <string name="action_collect">收藏</string>
-    <string name="action_settings">设置</string>
+    <string name="action_about">关于</string>
     <string name="refresh_loading">正在加载</string>
     <string name="version_tip">版本</string>
 

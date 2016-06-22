@@ -25,6 +25,7 @@ import java.io.InputStream;
 public class FileUtil {
     final static String resPath = AppConfig.appName + "res" + File.separator;
     final static String apkPath = resPath + "apk" + File.separator;
+    final static String iconImgPath = apkPath + "iconImg";
 
     /**
      * 复制单个文件
@@ -82,6 +83,11 @@ public class FileUtil {
 
     public static String getDiskCacheDirApkPath(Context context) {
         String rootParh = getDiskCacheDir(context) + apkPath;
+        return rootParh;
+    }
+
+    public static String getDiskCacheDirIconImgPath(Context context) {
+        String rootParh = getDiskCacheDir(context) + iconImgPath;
         return rootParh;
     }
 

@@ -1,5 +1,7 @@
 package com.yoyo.yoappmanage.entity;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * 项目名称：YoAppManage
  * 类描述：
@@ -10,7 +12,7 @@ package com.yoyo.yoappmanage.entity;
  * 修改备注：
  */
 public class InstalledInfoEntity {
-    public int icon ;//获得该资源图片在 R 文件中的值 (对应于 android:icon 属性)
+    public Drawable icon ;//获得该资源图片在 R 文件中的值 (对应于 android:icon 属性)
    /* @Column(name="labelRes")
     public int labelRes;// 获得该 label 在 R 文件中的值 (对应于 android:label 属性)*/
     public String name;// 获得该节点的 name 值 (对应于 android:name 属性)
@@ -21,11 +23,11 @@ public class InstalledInfoEntity {
     String apkSystemPath;
     String apkPath;
 
-    public int getIcon() {
+    public Drawable getIcon() {
         return icon;
     }
 
-    public void setIcon(int icon) {
+    public void setIcon(Drawable icon) {
         this.icon = icon;
     }
 

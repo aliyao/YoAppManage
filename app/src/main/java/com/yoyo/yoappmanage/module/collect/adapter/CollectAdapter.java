@@ -42,11 +42,11 @@ public class CollectAdapter extends BaseAdapter<CollectInfoEntity, CollectViewHo
     @Override
     public void onBindViewHolder(CollectViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        CollectInfoEntity manageInfo = getItem(position);
-        //holder.iv_icon;
-        holder.tv_name.setText(manageInfo.getName());
-        holder.tv_packagename.setText(manageInfo.getPackageName());
-        holder.tv_version_name.setText(holder.version_tip+" "+manageInfo.getVersionName());
+        CollectInfoEntity collectInfoEntity = getItem(position);
+        //holder.iv_icon.setImageBitmap();
+        holder.tv_name.setText(collectInfoEntity.getName());
+        holder.tv_packagename.setText(collectInfoEntity.getPackageName());
+        holder.tv_version_name.setText(holder.version_tip+" "+collectInfoEntity.getVersionName());
        // holder.tv_label.setVisibility(View.GONE);
     }
 }

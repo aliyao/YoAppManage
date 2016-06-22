@@ -233,9 +233,17 @@ public class CollectFragment extends BaseFragment implements OnBaseRecyclerViewL
                             rxJavaTodoEntity.setrTipText(0);
                             String apkPath = collectInfoEntity.getApkPath();
                             if (!TextUtils.isEmpty(apkPath)) {
-                                File delFile = new File(apkPath);
-                                if (delFile.exists()) {
-                                    delFile.delete();
+                                File delApkPathFile = new File(apkPath);
+                                if (delApkPathFile.exists()) {
+                                    delApkPathFile.delete();
+                                }
+                            }
+
+                            String iconImg = collectInfoEntity.getIconPath();
+                            if (!TextUtils.isEmpty(iconImg)) {
+                                File delIconImgFile = new File(iconImg);
+                                if (delIconImgFile.exists()) {
+                                    delIconImgFile.delete();
                                 }
                             }
                         }

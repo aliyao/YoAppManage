@@ -1,5 +1,12 @@
 package com.yoyo.yoappmanage.common.tool;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.NinePatchDrawable;
+
 import com.yoyo.yoappmanage.entity.CollectInfoEntity;
 import com.yoyo.yoappmanage.entity.InstalledInfoEntity;
 
@@ -13,9 +20,11 @@ import com.yoyo.yoappmanage.entity.InstalledInfoEntity;
  * 修改备注：
  */
 public class InstallCollectTools {
-    public static CollectInfoEntity InstallToCollectInfo(InstalledInfoEntity installedInfoEntity){
-        CollectInfoEntity collectInfoEntity=new CollectInfoEntity(installedInfoEntity.getIcon(),installedInfoEntity.getName(),installedInfoEntity.getPackageName(),installedInfoEntity.getVersionName(),
-                installedInfoEntity.getVersionCode(),installedInfoEntity.getApkSystemPath(),installedInfoEntity.getApkPath());
+    public static CollectInfoEntity InstallToCollectInfo(InstalledInfoEntity installedInfoEntity,String iconSavePath) {
+
+        CollectInfoEntity collectInfoEntity = new CollectInfoEntity(iconSavePath, installedInfoEntity.getName(), installedInfoEntity.getPackageName(), installedInfoEntity.getVersionName(),
+                installedInfoEntity.getVersionCode(), installedInfoEntity.getApkSystemPath(), installedInfoEntity.getApkPath());
         return collectInfoEntity;
     }
+
 }

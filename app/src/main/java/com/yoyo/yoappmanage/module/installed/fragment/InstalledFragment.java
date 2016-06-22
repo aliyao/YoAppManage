@@ -1,6 +1,8 @@
 package com.yoyo.yoappmanage.module.installed.fragment;
 
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,6 +22,7 @@ import com.yoyo.yoappmanage.base.OnBaseRecyclerViewListener;
 import com.yoyo.yoappmanage.common.tool.InstallCollectTools;
 import com.yoyo.yoappmanage.common.util.AlertDialogUtils;
 import com.yoyo.yoappmanage.common.util.ApkUtil;
+import com.yoyo.yoappmanage.common.util.BitampUtils;
 import com.yoyo.yoappmanage.common.util.FileUtil;
 import com.yoyo.yoappmanage.common.util.X3DBUtils;
 import com.yoyo.yoappmanage.config.AppConfig;
@@ -178,7 +181,11 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                                 Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
                                     @Override
                                     public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
-                                        CollectInfoEntity collectInfoEntity=InstallCollectTools.InstallToCollectInfo(installedAdapter.getItem(position));
+                                        InstalledInfoEntity installedInfoEntity=installedAdapter.getItem(position);
+                                        Bitmap iconBitmap= BitampUtils.drawableToBitamp(installedInfoEntity.getIcon());
+                                        String iconSavePath=FileUtil.getDiskCacheDirIconImgPath(getContext());
+                                        String saveIconBitmapFilePath=BitampUtils.saveBitmapIcon(iconBitmap,iconSavePath);
+                                        CollectInfoEntity collectInfoEntity=InstallCollectTools.InstallToCollectInfo(installedInfoEntity,saveIconBitmapFilePath);
                                         RxJavaTodoEntity  rxJavaTodoEntity = unInstallDelInfo(collectInfoEntity);
                                         subscriber.onNext(rxJavaTodoEntity);
                                         subscriber.onCompleted();
