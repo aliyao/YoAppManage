@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".module.activity.MainActivity">
     <item
-        android:id="@+id/action_manage"
+        android:id="@+id/action_installed"
         android:orderInCategory="100"
-        android:title="@string/action_manage"
+        android:title="@string/action_installed"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_recommend"
+        android:id="@+id/action_collect"
         android:orderInCategory="100"
-        android:title="@string/action_recommend"
+        android:title="@string/action_collect"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_settings"

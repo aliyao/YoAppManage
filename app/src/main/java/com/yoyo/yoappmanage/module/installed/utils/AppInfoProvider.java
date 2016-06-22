@@ -1,4 +1,4 @@
-package com.yoyo.yoappmanage.module.manage.utils;
+package com.yoyo.yoappmanage.module.installed.utils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
-import com.yoyo.yoappmanage.entity.ManageInfoEntity;
+import com.yoyo.yoappmanage.entity.InstalledInfoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +33,13 @@ public class AppInfoProvider {
      * 获取系统中所有应用信息，
      * 并将应用软件信息保存到list列表中。
      **/
-    public List<ManageInfoEntity> getAllApps() {
-        List<ManageInfoEntity> list = new ArrayList<ManageInfoEntity>();
-        ManageInfoEntity myAppInfo;
+    public List<InstalledInfoEntity> getAllApps() {
+        List<InstalledInfoEntity> list = new ArrayList<InstalledInfoEntity>();
+        InstalledInfoEntity myAppInfo;
         //获取到所有安装了的应用程序的信息，包括那些卸载了的，但没有清除数据的应用程序
         List<PackageInfo> packageInfos = packageManager.getInstalledPackages(PackageManager.GET_SIGNATURES);
         for (PackageInfo info : packageInfos) {
-            myAppInfo = new ManageInfoEntity();
+            myAppInfo = new InstalledInfoEntity();
             //拿到包名
             String packageName = info.packageName;
             //拿到应用程序的信息

@@ -14,6 +14,9 @@ import android.view.View;
  */
 public class YoSnackbar {
     public static void showSnackbar(View view,int rStr){
+        if(rStr==0){
+            return;
+        }
         Snackbar.make(view, rStr, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }

@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.yoyo.yoappmanage.R;
-import com.yoyo.yoappmanage.module.manage.fragment.ManageFragment;
-import com.yoyo.yoappmanage.module.recommend.fragment.RecommendFragment;
+import com.yoyo.yoappmanage.module.installed.fragment.InstalledFragment;
+import com.yoyo.yoappmanage.module.collect.fragment.CollectFragment;
 
 /**
  * 项目名称：YoAppManage
@@ -31,10 +31,10 @@ public class MainSectionsPagerAdapter  extends FragmentPagerAdapter {
         Fragment fragment;
         switch (position) {
             case 1:
-                fragment= RecommendFragment.newInstance(position + 1);
+                fragment= CollectFragment.newInstance(position + 1);
                 break;
             default:
-                fragment = ManageFragment.newInstance(position + 1);
+                fragment = InstalledFragment.newInstance(position + 1);
                 break;
         }
         return fragment;
@@ -50,9 +50,9 @@ public class MainSectionsPagerAdapter  extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 1:
-                return context.getResources().getString(R.string.action_recommend);
+                return context.getResources().getString(R.string.action_collect);
             default:
-                return context.getResources().getString(R.string.action_manage);
+                return context.getResources().getString(R.string.action_installed);
         }
     }
 }

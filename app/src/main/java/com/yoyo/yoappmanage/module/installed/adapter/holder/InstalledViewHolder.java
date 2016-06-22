@@ -1,4 +1,4 @@
-package com.yoyo.yoappmanage.module.manage.adapter.holder;
+package com.yoyo.yoappmanage.module.installed.adapter.holder;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * 修改时间：2016/5/18 17:45
  * 修改备注：
  */
-public class ManageViewHolder extends BaseRecyclerViewViewHolder {
+public class InstalledViewHolder extends BaseRecyclerViewViewHolder {
     @BindView(R.id.iv_icon)
     public ImageView iv_icon;
     @BindView(R.id.tv_name)
@@ -34,7 +34,7 @@ public class ManageViewHolder extends BaseRecyclerViewViewHolder {
     @BindString(R.string.version_tip)
     public String version_tip;
 
-    public ManageViewHolder(View itemView) {
+    public InstalledViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

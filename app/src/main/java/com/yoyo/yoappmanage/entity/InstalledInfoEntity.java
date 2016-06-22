@@ -14,8 +14,8 @@ import java.util.Date;
  * 修改时间：2016/6/20 17:30
  * 修改备注：
  */
-@Table(name = "ManageInfoEntity")
-public class ManageInfoEntity {
+@Table(name = "InstalledInfoEntity")
+public class InstalledInfoEntity {
     @Column(name="icon")
     public int icon ;//获得该资源图片在 R 文件中的值 (对应于 android:icon 属性)
    /* @Column(name="labelRes")

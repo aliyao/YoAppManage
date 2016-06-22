@@ -46,10 +46,10 @@ public class MainActivity extends BaseActivity {
             case R.id.action_settings:
 
                 return true;
-            case R.id.action_manage:
+            case R.id.action_installed:
 
                 return true;
-            case R.id.action_recommend:
+            case R.id.action_collect:
 
                 return true;
 

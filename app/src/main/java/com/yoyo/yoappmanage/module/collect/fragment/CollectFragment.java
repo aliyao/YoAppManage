@@ -1,4 +1,4 @@
-package com.yoyo.yoappmanage.module.recommend.fragment;
+package com.yoyo.yoappmanage.module.collect.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,20 @@ import butterknife.ButterKnife;
 
 /**
  * 项目名称：YoAppManage
- * 类描述：推荐
+ * 类描述：收藏
  * 创建人：yoyo
  * 创建时间：2016/6/20 15:42
  * 修改人：yoyo
  * 修改时间：2016/6/20 15:42
  * 修改备注：
  */
-public class RecommendFragment  extends BaseFragment {
+public class CollectFragment extends BaseFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public RecommendFragment() {
+    public CollectFragment() {
     }
-    public static RecommendFragment newInstance(int sectionNumber) {
-        RecommendFragment fragment = new RecommendFragment();
+    public static CollectFragment newInstance(int sectionNumber) {
+        CollectFragment fragment = new CollectFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -35,7 +35,7 @@ public class RecommendFragment  extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_recommend, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_collect, container, false);
         ButterKnife.bind(this, rootView);
         init();
         return rootView;

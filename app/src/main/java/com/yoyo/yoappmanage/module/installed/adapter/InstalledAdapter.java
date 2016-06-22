@@ -1,7 +1,6 @@
-package com.yoyo.yoappmanage.module.manage.adapter;
+package com.yoyo.yoappmanage.module.installed.adapter;
 
 import android.support.annotation.NonNull;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,8 @@ import android.widget.LinearLayout;
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseAdapter;
 import com.yoyo.yoappmanage.base.OnBaseRecyclerViewListener;
-import com.yoyo.yoappmanage.entity.ManageInfoEntity;
-import com.yoyo.yoappmanage.module.manage.adapter.holder.ManageViewHolder;
+import com.yoyo.yoappmanage.entity.InstalledInfoEntity;
+import com.yoyo.yoappmanage.module.installed.adapter.holder.InstalledViewHolder;
 
 import java.util.List;
 
@@ -24,26 +23,26 @@ import java.util.List;
  * 修改时间：2016/6/20 17:27
  * 修改备注：
  */
-public class ManageAdapter extends BaseAdapter<ManageInfoEntity, ManageViewHolder> {
+public class InstalledAdapter extends BaseAdapter<InstalledInfoEntity, InstalledViewHolder> {
 
-    public ManageAdapter(@NonNull List<ManageInfoEntity> mData,OnBaseRecyclerViewListener onBaseRecyclerViewListener) {
+    public InstalledAdapter(@NonNull List<InstalledInfoEntity> mData, OnBaseRecyclerViewListener onBaseRecyclerViewListener) {
         super(mData,onBaseRecyclerViewListener);
     }
 
     @Override
-    public ManageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manage_listview_item, null);
+    public InstalledViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.installed_listview_item, null);
         //view.setBackgroundColor(Color.RED);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lp);
-        ManageViewHolder viewHolder = new ManageViewHolder(view);
+        InstalledViewHolder viewHolder = new InstalledViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ManageViewHolder holder, int position) {
+    public void onBindViewHolder(InstalledViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        ManageInfoEntity manageInfo = getItem(position);
+        InstalledInfoEntity manageInfo = getItem(position);
         //holder.iv_icon;
         holder.tv_name.setText(manageInfo.getName());
         holder.tv_packagename.setText(manageInfo.getPackageName());

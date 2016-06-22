@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">YoApp管理</string>
-    <string name="action_manage">管理</string>
-    <string name="action_recommend">推荐</string>
+    <string name="action_installed">已安装</string>
+    <string name="action_collect">收藏</string>
     <string name="action_settings">设置</string>
     <string name="refresh_loading">正在加载</string>
     <string name="version_tip">版本</string>
@@ -9,14 +9,14 @@
     <string name="btn_ok">确定</string>
     <string name="btn_cancle">取消</string>
 
-    <string-array name="alert_dialog_list_todo_manage_item_long_click">
+    <string-array name="alert_dialog_list_todo_installed_item_long_click">
         <item>安装打开</item>
         <item>卸载收藏</item>
         <item>删除收藏</item>
     </string-array>
 
-    <string name="manage_item_delect_todo">是否确定删除？</string>
-    <string name="manage_item_not_found">找不到文件</string>
+    <string name="installed_item_delect_todo">是否确定删除？</string>
+    <string name="installed_item_not_found">找不到文件</string>
     <string name="to_do_error">操作失败</string>
     <string name="to_do_installed">已安装</string>
 </resources>
