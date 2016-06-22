@@ -16,4 +16,7 @@
     </string-array>
 
     <string name="manage_item_delect_todo">是否确定删除？</string>
+    <string name="manage_item_not_found">找不到文件</string>
+    <string name="to_do_error">操作失败</string>
+    <string name="to_do_installed">已安装</string>
 </resources>

@@ -10,6 +10,7 @@ package com.yoyo.yoappmanage.config;
  * 修改备注：
  */
 public class AppConfig {
+    public final static String appName="YoAppManage";
     public final static boolean isDebug=false;
     public final static String logTag="YoAppManage";
     //上下拉刷新延迟时间

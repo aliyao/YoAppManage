@@ -45,27 +45,33 @@ public class X3DBUtils {
         DbManager db = x.getDb( getDaoConfig(dbName));
         return db;
     }
-    public static void save(Object items) {
+    public static boolean save(Object items) {
+        boolean isSaveSuccess=false;
         if (items == null) {
-            return;
+            return isSaveSuccess;
         }
         try {
             DbManager db = getDb();
             db.saveOrUpdate(items);
+            isSaveSuccess=true;
         } catch (Throwable e) {
             e.printStackTrace();
         }
+        return isSaveSuccess;
     }
-    public static void delectById(Class<?> entityType, Object idValue) {
+    public static boolean delectById(Class<?> entityType, Object idValue) {
+        boolean isDelectSuccess=false;
         if (idValue == null) {
-            return;
+            return isDelectSuccess;
         }
         try {
             DbManager db = getDb();
             db.deleteById(entityType, idValue);
+            isDelectSuccess=true;
         } catch (Throwable e) {
             e.printStackTrace();
         }
+        return isDelectSuccess;
     }
 
     public static  <T> List<T> findAll(Class<T> entityType)  {

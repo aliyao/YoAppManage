@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseAdapter;
+import com.yoyo.yoappmanage.base.OnBaseRecyclerViewListener;
 import com.yoyo.yoappmanage.entity.ManageInfoEntity;
 import com.yoyo.yoappmanage.module.manage.adapter.holder.ManageViewHolder;
 
@@ -25,8 +26,8 @@ import java.util.List;
  */
 public class ManageAdapter extends BaseAdapter<ManageInfoEntity, ManageViewHolder> {
 
-    public ManageAdapter(@NonNull List<ManageInfoEntity> mData) {
-        super(mData);
+    public ManageAdapter(@NonNull List<ManageInfoEntity> mData,OnBaseRecyclerViewListener onBaseRecyclerViewListener) {
+        super(mData,onBaseRecyclerViewListener);
     }
 
     @Override

@@ -62,7 +62,7 @@ public class AppInfoProvider {
                 // 一般来说，这两个属性的值和上面的属性的值相同
                 packagePath = appInfo.publicSourceDir;
             }
-            myAppInfo.setPackagePath(packagePath);
+            myAppInfo.setApkSystemPath(packagePath);
 
             //myAppInfo.setLabelRes(info.describeContents());
             //myAppInfo.setLabelRes(info.sharedUserLabel);

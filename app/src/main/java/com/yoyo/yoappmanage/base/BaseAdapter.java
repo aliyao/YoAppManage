@@ -12,9 +12,12 @@ public abstract class BaseAdapter<T, L extends BaseRecyclerViewViewHolder> exten
     public List<Object> clickGray = new ArrayList<>();//点击变色
     OnBaseRecyclerViewListener onRecyclerViewListener;
 
-    public BaseAdapter(@NonNull List<T> mData) {
+    public BaseAdapter(@NonNull List<T> mData,OnBaseRecyclerViewListener onBaseRecyclerViewListener) {
         if(mData==null){
             mData = new ArrayList<>();
+        }
+        if(onBaseRecyclerViewListener!=null){
+            this.onRecyclerViewListener=onBaseRecyclerViewListener;
         }
         this.mData = mData;
     }

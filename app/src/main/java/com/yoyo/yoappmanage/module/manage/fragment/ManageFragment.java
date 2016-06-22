@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.yoyo.common.view.OnToDoItemClickListener;
 import com.yoyo.common.view.RefreshLayout;
+import com.yoyo.common.view.YoSnackbar;
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseFragment;
 import com.yoyo.yoappmanage.base.OnBaseRecyclerViewListener;
@@ -94,7 +95,7 @@ public class ManageFragment extends BaseFragment implements OnBaseRecyclerViewLi
         //设置布局管理器
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         List<ManageInfoEntity> list = getNotSystemAppInfo();
-        manageAdapter = new ManageAdapter(list);
+        manageAdapter = new ManageAdapter(list,this);
         //passwordAdapter.setOnRecyclerViewListener(this);
         //设置adapter
         recyclerView.setAdapter(manageAdapter);
@@ -165,41 +166,100 @@ public class ManageFragment extends BaseFragment implements OnBaseRecyclerViewLi
 
             @Override
             public void onItemClick(DialogInterface dialog, int which) {
+                ManageInfoEntity manageInfoEntity=manageAdapter.getItem(position);
                 switch (which) {
                     case 0:
-                        try {
-                            String packagePath=manageAdapter.getItem(position).getPackagePath();
-                            if(!new File(packagePath).exists()){
-                                X3DBUtils.delectById(ManageInfoEntity.class, manageAdapter.getItem(position).getPackageName());
-                                refreshAdapter();
-                                return;
-                            }
-                            FileUtil.copyFile(manageAdapter.getItem(position).getPackagePath() ,FileUtil.getDiskCacheDir(getActivity()));
-                            ApkUtil.install(ManageFragment.this.getActivity(),packagePath);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-
+                        install(manageInfoEntity);
                         break;
                     case 1:
-
-                        ApkUtil.unInstall(ManageFragment.this.getActivity(),manageAdapter.getItem(position).getPackageName());
+                        unInstall(manageInfoEntity);
                         break;
                     case 2:
-                        AlertDialogUtils.showAlertDialog(getContext(), R.string.manage_item_delect_todo, new OnToDoItemClickListener() {
-                            @Override
-                            public void onPositiveClick(DialogInterface dialog, int which) {
-                                super.onPositiveClick(dialog, which);
-                                X3DBUtils.delectById(ManageInfoEntity.class, manageAdapter.getItem(position).getPackageName());
-                                refreshAdapter();
-                            }
-                        });
+                        delectInstall(manageInfoEntity);
                         break;
                 }
 
             }
         });
         return false;
+    }
+
+    private void install(ManageInfoEntity manageInfoEntity){
+        try {
+            String apkSystemPath=manageInfoEntity.getApkSystemPath();
+            if(new File(apkSystemPath).exists()){
+                YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.to_do_installed);
+                refreshAdapter();
+                return;
+            }
+            String apkPath=manageInfoEntity.getApkPath();
+            if(!new File(apkPath).exists()){
+                YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.to_do_error);
+                refreshAdapter();
+                return;
+            }
+            ApkUtil.install(ManageFragment.this.getActivity(),apkPath);
+            refreshAdapter();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void unInstall(ManageInfoEntity saveManageInfoEntity){
+        try {
+            String apkSystemPath=saveManageInfoEntity.getApkSystemPath();
+            File apkSystemFile=new File(apkSystemPath);
+            String apkSystemFileName=apkSystemFile.getName();
+            if(!apkSystemFileName.endsWith(".apk") ){//是否为apk文件
+                YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.manage_item_not_found);
+                return;
+            }
+            if(!apkSystemFile.exists()){
+                //X3DBUtils.delectById(ManageInfoEntity.class, manageAdapter.getItem(position).getPackageName());
+                //refreshAdapter();
+                YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.manage_item_not_found);
+                return;
+            }
+            String apkFile=FileUtil.getDiskCacheDirApkPath(getActivity());
+            boolean isCopySuccess= FileUtil.copyFile(apkSystemPath ,apkFile,apkSystemFileName);
+
+            if(!isCopySuccess){
+                YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.to_do_error);
+                return;
+            }
+            if(!new File(apkFile).exists()){
+                YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.to_do_error);
+                return;
+            }
+            saveManageInfoEntity.setApkPath(apkFile);
+            boolean isSaveSuccess=X3DBUtils.save(saveManageInfoEntity);
+            if(!isSaveSuccess){
+                YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.to_do_error);
+                return;
+            }
+            ApkUtil.unInstall(ManageFragment.this.getActivity(),saveManageInfoEntity.getPackageName());
+            refreshAdapter();
+        }catch (Exception e){
+            e.printStackTrace();
+            YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.to_do_error);
+            return;
+        }
+
+    }
+
+    private void delectInstall(final ManageInfoEntity manageInfoEntity){
+        AlertDialogUtils.showAlertDialog(getContext(), R.string.manage_item_delect_todo, new OnToDoItemClickListener() {
+            @Override
+            public void onPositiveClick(DialogInterface dialog, int which) {
+                super.onPositiveClick(dialog, which);
+                boolean isSaveSuccess=X3DBUtils.delectById(ManageInfoEntity.class,manageInfoEntity.getPackageName());
+                if(!isSaveSuccess){
+                    YoSnackbar.showSnackbar(ManageFragment.this.getView(),R.string.to_do_error);
+                    return;
+                }
+                refreshAdapter();
+            }
+        });
     }
 
     @Override

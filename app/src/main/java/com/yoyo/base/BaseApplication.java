@@ -1,5 +1,7 @@
 package com.yoyo.base;
 
+import android.app.Application;
+
 /**
  * 项目名称：YoAppManage
  * 类描述：
@@ -9,5 +11,5 @@ package com.yoyo.base;
  * 修改时间：2016/6/20 14:43
  * 修改备注：
  */
-public class BaseApplication {
+public class BaseApplication extends Application{
 }
