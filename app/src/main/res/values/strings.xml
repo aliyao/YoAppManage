@@ -10,13 +10,17 @@
     <string name="btn_cancle">取消</string>
 
     <string-array name="alert_dialog_list_todo_installed_item_long_click">
-        <item>安装打开</item>
+        <item>卸载</item>
         <item>卸载收藏</item>
+    </string-array>
+
+    <string-array name="alert_dialog_list_todo_collect_item_long_click">
+        <item>安装打开</item>
         <item>删除收藏</item>
     </string-array>
 
-    <string name="installed_item_delect_todo">是否确定删除？</string>
-    <string name="installed_item_not_found">找不到文件</string>
+    <string name="item_delect_todo">是否确定删除？</string>
+    <string name="item_not_found">找不到文件</string>
     <string name="to_do_error">操作失败</string>
     <string name="to_do_installed">已安装</string>
 </resources>

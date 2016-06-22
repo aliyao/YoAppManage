@@ -17,11 +17,13 @@ import com.yoyo.common.view.YoSnackbar;
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseFragment;
 import com.yoyo.yoappmanage.base.OnBaseRecyclerViewListener;
+import com.yoyo.yoappmanage.common.tool.InstallCollectTools;
 import com.yoyo.yoappmanage.common.util.AlertDialogUtils;
 import com.yoyo.yoappmanage.common.util.ApkUtil;
 import com.yoyo.yoappmanage.common.util.FileUtil;
 import com.yoyo.yoappmanage.common.util.X3DBUtils;
 import com.yoyo.yoappmanage.config.AppConfig;
+import com.yoyo.yoappmanage.entity.CollectInfoEntity;
 import com.yoyo.yoappmanage.entity.InstalledInfoEntity;
 import com.yoyo.yoappmanage.entity.RxJavaTodoEntity;
 import com.yoyo.yoappmanage.module.installed.adapter.InstalledAdapter;
@@ -168,41 +170,38 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
 
                     @Override
                     public void onItemClick(DialogInterface dialog, final int which) {
-                        Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
-                            @Override
-                            public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
-                                RxJavaTodoEntity rxJavaTodoEntity = null;
-                                switch (which) {
-                                    case 0:
-                                        rxJavaTodoEntity = install(installedAdapter.getItem(position));
-                                        break;
-                                    case 1:
-                                        rxJavaTodoEntity = unInstall(installedAdapter.getItem(position));
-                                        break;
-                                    case 2:
-                                        rxJavaTodoEntity = delectInstall(installedAdapter.getItem(position));
-                                        break;
-                                }
-                                subscriber.onNext(rxJavaTodoEntity);
-                                subscriber.onCompleted();
-                            }
-                        })
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Action1<RxJavaTodoEntity>() {
+                        switch (which) {
+                            case 0:
+                                unInstall(installedAdapter.getItem(position));
+                                break;
+                            case 1:
+                                Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
                                     @Override
-                                    public void call(RxJavaTodoEntity rxJavaTodoEntity) {
-                                        if (rxJavaTodoEntity == null) {
-                                            return;
-                                        }
-                                        if (rxJavaTodoEntity.isSuccess()) {
-                                            refreshAdapter();
-                                        }
-                                        YoSnackbar.showSnackbar(InstalledFragment.this.getView(), rxJavaTodoEntity.getrTipText());
-
-
+                                    public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
+                                        CollectInfoEntity collectInfoEntity=InstallCollectTools.InstallToCollectInfo(installedAdapter.getItem(position));
+                                        RxJavaTodoEntity  rxJavaTodoEntity = unInstallDelInfo(collectInfoEntity);
+                                        subscriber.onNext(rxJavaTodoEntity);
+                                        subscriber.onCompleted();
                                     }
-                                });
+                                })
+                                        .subscribeOn(Schedulers.newThread())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Action1<RxJavaTodoEntity>() {
+                                            @Override
+                                            public void call(RxJavaTodoEntity rxJavaTodoEntity) {
+                                                if (rxJavaTodoEntity == null) {
+                                                    return;
+                                                }
+                                                if (rxJavaTodoEntity.isSuccess()) {
+                                                    refreshAdapter();
+                                                }
+                                                YoSnackbar.showSnackbar(InstalledFragment.this.getView(), rxJavaTodoEntity.getrTipText());
+
+
+                                            }
+                                        });
+                                break;
+                        }
 
                     }
                 }
@@ -211,88 +210,51 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
         return false;
     }
 
-    private RxJavaTodoEntity install(InstalledInfoEntity installedInfoEntity) {
-        RxJavaTodoEntity rxJavaTodoEntity = new RxJavaTodoEntity(false, R.string.to_do_error);
-        try {
-            String apkSystemPath = installedInfoEntity.getApkSystemPath();
-            if (new File(apkSystemPath).exists()) {
-              /*  YoSnackbar.showSnackbar(InstalledFragment.this.getView(), R.string.to_do_installed);
-                refreshAdapter();*/
-                rxJavaTodoEntity.setrTipText(R.string.to_do_installed);
-                rxJavaTodoEntity.setSuccess(true);
-                return rxJavaTodoEntity;
-            }
-            String apkPath = installedInfoEntity.getApkPath();
-            if (!new File(apkPath).exists()) {
-                return rxJavaTodoEntity;
-            }
-            ApkUtil.install(InstalledFragment.this.getActivity(), apkPath);
-            rxJavaTodoEntity.setrTipText(R.string.to_do_installed);
-            rxJavaTodoEntity.setSuccess(true);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void unInstall(InstalledInfoEntity installedInfoEntity) {
+        if (installedInfoEntity == null || TextUtils.isEmpty(installedInfoEntity.getPackageName())) {
+            return;
         }
-
-        return rxJavaTodoEntity;
+        ApkUtil.unInstall(InstalledFragment.this.getActivity(), installedInfoEntity.getPackageName());
     }
 
-    private RxJavaTodoEntity unInstall(InstalledInfoEntity saveInstalledInfoEntity) {
+    private RxJavaTodoEntity unInstallDelInfo(CollectInfoEntity collectInfoEntity) {
         RxJavaTodoEntity rxJavaTodoEntity = new RxJavaTodoEntity(false, R.string.to_do_error);
         try {
-            String apkSystemPath = saveInstalledInfoEntity.getApkSystemPath();
+            String apkSystemPath = collectInfoEntity.getApkSystemPath();
             File apkSystemFile = new File(apkSystemPath);
             String apkSystemFileName = apkSystemFile.getName();
             if (!apkSystemFileName.endsWith(".apk")) {//是否为apk文件
-                rxJavaTodoEntity.setrTipText(R.string.installed_item_not_found);
+                rxJavaTodoEntity.setrTipText(R.string.item_not_found);
                 rxJavaTodoEntity.setSuccess(false);
                 return rxJavaTodoEntity;
             }
             if (!apkSystemFile.exists()) {
                 //X3DBUtils.delectById(InstalledInfoEntity.class, installedAdapter.getItem(position).getPackageName());
                 //refreshAdapter();
-                rxJavaTodoEntity.setrTipText(R.string.installed_item_not_found);
+                rxJavaTodoEntity.setrTipText(R.string.item_not_found);
                 rxJavaTodoEntity.setSuccess(false);
                 return rxJavaTodoEntity;
             }
-            String apkFile = FileUtil.getDiskCacheDirApkPath(getActivity());
-            boolean isCopySuccess = FileUtil.copyFile(apkSystemPath, apkFile, apkSystemFileName);
-
+            String apkFilePath = FileUtil.getDiskCacheDirApkPath(getActivity());
+            boolean isCopySuccess = FileUtil.copyFile(apkSystemPath, apkFilePath, apkSystemFileName);
+            String apkFile = FileUtil.getDiskCacheDirApkPath(getActivity())+apkSystemFileName;
             if (!isCopySuccess) {
                 return rxJavaTodoEntity;
             }
             if (!new File(apkFile).exists()) {
                 return rxJavaTodoEntity;
             }
-            saveInstalledInfoEntity.setApkPath(apkFile);
-            boolean isSaveSuccess = X3DBUtils.save(saveInstalledInfoEntity);
+            collectInfoEntity.setApkPath(apkFile);
+            boolean isSaveSuccess = X3DBUtils.save(collectInfoEntity);
             if (!isSaveSuccess) {
                 return rxJavaTodoEntity;
             }
-            ApkUtil.unInstall(InstalledFragment.this.getActivity(), saveInstalledInfoEntity.getPackageName());
+            ApkUtil.unInstall(InstalledFragment.this.getActivity(), collectInfoEntity.getPackageName());
             rxJavaTodoEntity.setrTipText(0);
             rxJavaTodoEntity.setSuccess(true);
         } catch (Exception e) {
             e.printStackTrace();
 
-        }
-        return rxJavaTodoEntity;
-    }
-
-    private RxJavaTodoEntity delectInstall(final InstalledInfoEntity installedInfoEntity) {
-        RxJavaTodoEntity rxJavaTodoEntity = new RxJavaTodoEntity(false, R.string.to_do_error);
-        boolean isSaveSuccess = X3DBUtils.delectById(InstalledInfoEntity.class, installedInfoEntity.getPackageName());
-        if (!isSaveSuccess) {
-            return rxJavaTodoEntity;
-        }
-        rxJavaTodoEntity.setSuccess(true);
-        rxJavaTodoEntity.setrTipText(0);
-        String apkPath = installedInfoEntity.getApkPath();
-        if (TextUtils.isEmpty(apkPath)) {
-            return rxJavaTodoEntity;
-        }
-        File delFile = new File(apkPath);
-        if (delFile.exists()) {
-            delFile.delete();
         }
         return rxJavaTodoEntity;
     }

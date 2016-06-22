@@ -52,7 +52,7 @@ public class RxBusUtils {
         List<Subject> subjects = subjectMapper.get(tag);
         if (null != subjects) {
             subjects.remove((Subject)observable);
-            if (ABTextUtil.isEmpty(subjects)) {
+            if (ABTextUtils.isEmpty(subjects)) {
                 subjectMapper.remove(tag);
             }
         }
@@ -68,7 +68,7 @@ public class RxBusUtils {
     public void post(@NonNull Object tag, @NonNull Object content) {
         List<Subject> subjectList = subjectMapper.get(tag);
 
-        if (!ABTextUtil.isEmpty(subjectList)) {
+        if (!ABTextUtils.isEmpty(subjectList)) {
             for (Subject subject : subjectList) {
                 subject.onNext(content);
             }

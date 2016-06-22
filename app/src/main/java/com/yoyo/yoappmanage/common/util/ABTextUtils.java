@@ -11,7 +11,7 @@ import java.util.List;
  * 修改时间：2016/6/3 10:48
  * 修改备注：
  */
-public class ABTextUtil {
+public class ABTextUtils {
 
     public static boolean isEmpty(List list){
         if(list==null||list.size()<=0){
