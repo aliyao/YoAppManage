@@ -1,5 +1,6 @@
 package com.yoyo.yoappmanage;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.yoyo.base.BaseApplication;
 
 import org.xutils.x;
@@ -17,11 +18,14 @@ public class MyApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        initXutils();
+        initUtils();
     }
 
-    public void initXutils(){
+    public void initUtils(){
+        //Xutils数据库
         x.Ext.init(this);
         x.Ext.setDebug(android.support.design.BuildConfig.DEBUG);
+        //Facebook 图片加载的框架
+        Fresco.initialize(this);
     }
 }

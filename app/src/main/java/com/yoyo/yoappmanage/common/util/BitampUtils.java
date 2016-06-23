@@ -42,7 +42,7 @@ public class BitampUtils {
     /** 保存方法 */
     public static String  saveBitmapIcon( Bitmap bm,String path) {
         boolean isSave=false;
-        String picName= AppConfig.appName+new TimeStringUtils().getTimeString();//文件名
+        String picName= AppConfig.appName+new TimeStringUtils().getTimeString()+".png";//文件名
         File pathFile = new File(path);//保存文件目录
         if (!pathFile.exists()) {//文件目录不存在就创建
             pathFile.mkdirs();

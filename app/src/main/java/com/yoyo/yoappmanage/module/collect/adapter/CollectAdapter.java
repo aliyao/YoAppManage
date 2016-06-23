@@ -1,6 +1,8 @@
 package com.yoyo.yoappmanage.module.collect.adapter;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +45,14 @@ public class CollectAdapter extends BaseAdapter<CollectInfoEntity, CollectViewHo
     public void onBindViewHolder(CollectViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         CollectInfoEntity collectInfoEntity = getItem(position);
-        //holder.iv_icon.setImageBitmap();
+        String localPath=collectInfoEntity.getIconPath();
+        if(!TextUtils.isEmpty(localPath)){
+            Uri uri = Uri.parse("file://"+localPath);
+            if(uri!=null){
+                holder.iv_facebook_icon.setImageURI(uri);
+            }
+        }
+
         holder.tv_name.setText(collectInfoEntity.getName());
         holder.tv_packagename.setText(collectInfoEntity.getPackageName());
         holder.tv_version_name.setText(holder.version_tip+" "+collectInfoEntity.getVersionName());
