@@ -208,7 +208,7 @@ public class CollectFragment extends BaseFragment implements OnBaseRecyclerViewL
                 return rxJavaTodoEntity;
             }
             ApkUtil.install(CollectFragment.this.getActivity(), apkPath);
-            rxJavaTodoEntity.setrTipText(R.string.to_do_installed);
+            rxJavaTodoEntity.setrTipText(0);
             rxJavaTodoEntity.setSuccess(true);
         } catch (Exception e) {
             e.printStackTrace();
