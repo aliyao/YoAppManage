@@ -2,6 +2,7 @@ package com.yoyo.yoappmanage.module.installed.adapter.holder;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yoyo.yoappmanage.R;
@@ -21,6 +22,10 @@ import butterknife.ButterKnife;
  * 修改备注：
  */
 public class InstalledViewHolder extends BaseRecyclerViewViewHolder {
+    @BindView(R.id.list_item_click)
+    public View list_item_click;
+    @BindView(R.id.progress_small)
+    public ProgressBar progress_small;
     @BindView(R.id.iv_icon)
     public ImageView iv_icon;
     @BindView(R.id.tv_name)

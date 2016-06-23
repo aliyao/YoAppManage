@@ -178,6 +178,8 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                                 unInstall(installedAdapter.getItem(position));
                                 break;
                             case 0:
+                                installedAdapter.add(installedAdapter.getItem(position).getPackageName());
+                                installedAdapter.notifyDataSetChanged();
                                 Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
                                     @Override
                                     public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
@@ -196,6 +198,8 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                                         .subscribe(new Action1<RxJavaTodoEntity>() {
                                             @Override
                                             public void call(RxJavaTodoEntity rxJavaTodoEntity) {
+                                                installedAdapter.remove(installedAdapter.getItem(position).getPackageName());
+                                                installedAdapter.notifyDataSetChanged();
                                                 if (rxJavaTodoEntity == null) {
                                                     return;
                                                 }

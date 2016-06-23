@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/space_item_x"
     android:paddingBottom="@dimen/space_item"
-    >
+    android:paddingTop="@dimen/space_item_x">
 
     <RelativeLayout
+        android:id="@+id/list_item_click"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/selector_click"
@@ -34,6 +34,7 @@
                 android:text="@string/app_name"
                 android:textColor="@color/font_color_79"
                 android:textSize="@dimen/title_text_size" />
+
             <TextView
                 android:id="@+id/tv_version_name"
                 android:layout_width="wrap_content"
@@ -54,16 +55,16 @@
                 android:textColor="@color/font_color_dc"
                 android:textSize="@dimen/text_size_m" />
 
-            <!--<TextView
-                android:id="@+id/tv_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_packagename"
-                android:layout_marginTop="@dimen/space_item"
-                android:text="好用 好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用好用"
-                android:textColor="@color/font_color_9c"
-                android:textSize="@dimen/content_text_size" />-->
-
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_small"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 </RelativeLayout>

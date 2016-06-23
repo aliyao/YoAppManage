@@ -1,6 +1,7 @@
 package com.yoyo.yoappmanage.module.installed.adapter;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.yoyo.yoappmanage.base.OnBaseRecyclerViewListener;
 import com.yoyo.yoappmanage.entity.InstalledInfoEntity;
 import com.yoyo.yoappmanage.module.installed.adapter.holder.InstalledViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +26,7 @@ import java.util.List;
  * 修改备注：
  */
 public class InstalledAdapter extends BaseAdapter<InstalledInfoEntity, InstalledViewHolder> {
+    List<String>  unInstallPackageNameList;
 
     public InstalledAdapter(@NonNull List<InstalledInfoEntity> mData, OnBaseRecyclerViewListener onBaseRecyclerViewListener) {
         super(mData,onBaseRecyclerViewListener);
@@ -47,6 +50,40 @@ public class InstalledAdapter extends BaseAdapter<InstalledInfoEntity, Installed
         holder.tv_name.setText(installedInfoEntity.getName());
         holder.tv_packagename.setText(installedInfoEntity.getPackageName());
         holder.tv_version_name.setText(holder.version_tip+" "+installedInfoEntity.getVersionName());
+        if(unInstallPackageNameList!=null&&unInstallPackageNameList.contains(installedInfoEntity.getPackageName())){
+            holder.itemView.setEnabled(false);
+            holder.list_item_click.setEnabled(false);
+            holder.progress_small.setVisibility(View.VISIBLE);
+        }else{
+            holder.itemView.setEnabled(true);
+            holder.list_item_click.setEnabled(true);
+            holder.progress_small.setVisibility(View.GONE);
+        }
        // holder.tv_label.setVisibility(View.GONE);
+    }
+
+    public void add(String packageName){
+        if(TextUtils.isEmpty(packageName)){
+            return;
+        }
+        if(unInstallPackageNameList==null){
+            unInstallPackageNameList=new ArrayList<>();
+        }
+        if(unInstallPackageNameList.contains(packageName)){//已存在
+            return;
+        }
+        unInstallPackageNameList.add(packageName);
+    }
+
+    public void remove(String packageName){
+        if(TextUtils.isEmpty(packageName)){
+            return;
+        }
+        if(unInstallPackageNameList==null){
+            return;
+        }
+        if(unInstallPackageNameList.contains(packageName)){//已存在
+            unInstallPackageNameList.remove(packageName);
+        }
     }
 }
