@@ -28,7 +28,7 @@ public class AboutActivity extends BaseActivity {
     private void init() {
         TextView app_version = (TextView) findViewById(R.id.app_version);
         bt_update = (Button) findViewById(R.id.bt_update);
-        String versionName = AppInfoUtil.getVersionName(AboutActivity.this);
+        String versionName = "版本 "+AppInfoUtil.getVersionName(AboutActivity.this);
         if (TextUtils.isEmpty(versionName)) {
             app_version.setVisibility(View.GONE);
         } else {
