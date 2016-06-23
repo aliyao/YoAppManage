@@ -46,8 +46,11 @@ public class FileUtil {
             }
             String newfilePath = newPath + newFileName;//复制后路径
             File newfile = new File(newfilePath);//复制文件
-            if (newfile.exists()) {// 文件存在就不复制  返回成功
+            /*if (newfile.exists()) {// 文件存在就不复制  返回成功
                 return true;
+            }*/
+            if (newfile.exists()) {// 文件存在就删除
+                newfile.delete();
             }
             File newCachePath = new File(newPath);//缓存文件目录
             if (!newCachePath.exists()) {
