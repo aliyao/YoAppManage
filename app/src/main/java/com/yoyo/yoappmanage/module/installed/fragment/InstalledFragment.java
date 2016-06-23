@@ -174,10 +174,10 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                     @Override
                     public void onItemClick(DialogInterface dialog, final int which) {
                         switch (which) {
-                            case 0:
+                            case 1:
                                 unInstall(installedAdapter.getItem(position));
                                 break;
-                            case 1:
+                            case 0:
                                 Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
                                     @Override
                                     public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {

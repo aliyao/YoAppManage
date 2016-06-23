@@ -8,6 +8,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 
+import com.yoyo.yoappmanage.config.AppConfig;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -40,17 +42,16 @@ public class BitampUtils {
     /** 保存方法 */
     public static String  saveBitmapIcon( Bitmap bm,String path) {
         boolean isSave=false;
-        String picName=new TimeStringUtils().getTimeString();
-        File pathFile = new File(path);
-        if (!pathFile.exists()) {
-            pathFile.exists();
+        String picName= AppConfig.appName+new TimeStringUtils().getTimeString();//文件名
+        File pathFile = new File(path);//保存文件目录
+        if (!pathFile.exists()) {//文件目录不存在就创建
+            pathFile.mkdirs();
         }
-        File saveFile = new File(path, picName);
-        if (saveFile.exists()) {
+        File saveFile = new File(path, picName);//文件的路径
+        if (saveFile.exists()) {//存在就删除
             saveFile.delete();
         }
         try {
-            saveFile.createNewFile();
             FileOutputStream out = new FileOutputStream(saveFile);
             bm.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.flush();
@@ -63,10 +64,10 @@ public class BitampUtils {
         }catch (Exception e){
             e.printStackTrace();
         }
-        if(!isSave&&saveFile.exists()){
-            saveFile.delete();
-        }else if(isSave&&saveFile.exists()){
+        if(isSave && saveFile.exists()){//保存成功文件存在
             return path+picName;
+        }else if(!isSave&&saveFile.exists()){//保存失败 而且文件存在就删除
+            saveFile.delete();
         }
         return null;
     }

@@ -25,7 +25,7 @@ import java.io.InputStream;
 public class FileUtil {
     final static String resPath = AppConfig.appName + "res" + File.separator;
     final static String apkPath = resPath + "apk" + File.separator;
-    final static String iconImgPath = apkPath + "iconImg";
+    final static String iconImgPath = apkPath + "iconImg"+ File.separator;
 
     /**
      * 复制单个文件
@@ -50,14 +50,13 @@ public class FileUtil {
                 return true;
             }
             File newCachePath = new File(newPath);//缓存文件目录
+            if (!newCachePath.exists()) {
+                newCachePath.mkdirs();
+            }
             File newCacheFile = new File(newPath, newCacheFileName);//缓存文件
             if (newCacheFile.exists()) {// 文件存在就删除
                 newCacheFile.delete();
             }
-            if(!newCachePath.exists()){
-                newCachePath.mkdirs();
-            }
-            newCacheFile.createNewFile();
             int byteread;
             InputStream inStream = new FileInputStream(oldFilePath); // 读入原文件
             FileOutputStream fs = new FileOutputStream(newCacheFile);
