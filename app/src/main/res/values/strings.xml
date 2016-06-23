@@ -3,6 +3,7 @@
     <string name="action_installed">安装</string>
     <string name="action_collect">收藏</string>
     <string name="action_about">关于</string>
+    <string name="action_update">查看更新</string>
     <string name="refresh_loading">正在加载</string>
     <string name="version_tip">版本</string>
 
@@ -25,4 +26,6 @@
     <string name="to_do_installed">已安装</string>
     <string name="title_activity_about">关于</string>
     <string name="about_text">小而精，广而美</string>
+    <string name="open_market_error">打开应用商店失败</string>
+
 </resources>
