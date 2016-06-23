@@ -23,4 +23,6 @@
     <string name="item_not_found">找不到文件</string>
     <string name="to_do_error">操作失败</string>
     <string name="to_do_installed">已安装</string>
+    <string name="title_activity_about">关于</string>
+    <string name="about_text">小而精，广而美</string>
 </resources>

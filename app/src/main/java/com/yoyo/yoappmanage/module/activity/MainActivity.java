@@ -1,5 +1,6 @@
 package com.yoyo.yoappmanage.module.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.ViewTreeObserver;
 import com.yoyo.yoappmanage.R;
 import com.yoyo.yoappmanage.base.BaseActivity;
 import com.yoyo.yoappmanage.entity.MenuItemSelectEntity;
+import com.yoyo.yoappmanage.module.about.AboutActivity;
 import com.yoyo.yoappmanage.module.adapter.MainSectionsPagerAdapter;
 
 import java.util.ArrayList;
@@ -105,7 +107,7 @@ public class MainActivity extends BaseActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_about:
-
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 return true;
             case R.id.action_installed:
                 mViewPager.setCurrentItem(0);
