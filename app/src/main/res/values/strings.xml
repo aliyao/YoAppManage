@@ -8,6 +8,7 @@
     <string name="version_tip">版本</string>
 
     <string name="btn_ok">确定</string>
+    <string name="btn_ok_web_update">网页更新</string>
     <string name="btn_cancle">取消</string>
 
     <string-array name="alert_dialog_list_todo_installed_item_long_click">
@@ -27,5 +28,7 @@
     <string name="title_activity_about">关于</string>
     <string name="about_text">小而精，广而美</string>
     <string name="open_market_error">打开应用商店失败</string>
+    <string name="net_error">网络异常</string>
 
+    <string name="update_text">检测到新版本，确定更新</string>
 </resources>

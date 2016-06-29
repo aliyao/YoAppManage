@@ -47,11 +47,11 @@ public class AboutActivity extends BaseActivity {
         }
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_about, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -60,9 +60,9 @@ public class AboutActivity extends BaseActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.action_update:
+            /*case R.id.action_update:
                 openApplicationMarket();
-                return true;
+                return true;*/
 
         }
         return super.onOptionsItemSelected(item);
@@ -72,7 +72,7 @@ public class AboutActivity extends BaseActivity {
      * 通过包名 在应用商店打开应用
      *
      */
-    private void openApplicationMarket() {
+  /*  private void openApplicationMarket() {
         String packageName = this.getPackageName();
         try {
             String str = "market://details?id=" + packageName;
@@ -88,16 +88,16 @@ public class AboutActivity extends BaseActivity {
             String url = "https://www.baidu.com/s?wd="+getResources().getString(R.string.app_name);
             openLinkBySystem(url);
         }
-    }
+    }*/
 
     /**
      * 调用系统浏览器打开网页
      *
      * @param url 地址
      */
-    private void openLinkBySystem(String url) {
+  /*  private void openLinkBySystem(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
-    }
+    }*/
 }

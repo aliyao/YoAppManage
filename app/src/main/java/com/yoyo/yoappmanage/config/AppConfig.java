@@ -24,4 +24,8 @@ public class AppConfig {
     public final static String APP_AES_KEY="M5LN2zu8p1WEadVn";
     public final static String APP_MD5_USER_INFO_KEY="DnXZgyZo2QKeZMoQ";
     public final static String APP_MD5_USER_ID_KEY="jdxOuv211KjVXwcz";
+
+    public final static String MY_BMOB_APPLICATION_ID="0c085439eb211b3a95691c8d4e015297";
+
+    public final static String MY_BMOB_UPDATE_APP_CLOUDCODENAME="AppUpdateCheck";
 }
