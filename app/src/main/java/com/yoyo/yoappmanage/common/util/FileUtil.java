@@ -103,7 +103,7 @@ public class FileUtil {
         }
 
         final String cachePath = Environment.MEDIA_MOUNTED.equals(Environment
-                .getExternalStorageState()) || !isExternalStorageRemovable() ? getExternalCacheDir(
+                .getExternalStorageState()) || !isExternalStorageRemovable() ? getExternalApkDir(
                 context).getPath()
                 : context.getCacheDir().getPath();
 
@@ -118,15 +118,17 @@ public class FileUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public static File getExternalCacheDir(Context context) {
+    public static File getExternalApkDir(Context context) {
         if (Utils.hasFroyo()) {
             return context.getExternalCacheDir();
         }
 
         // Before Froyo we need to construct the external cache dir ourselves
-        final String cacheDir = "/Android/data/" + context.getPackageName()
-                + "/cache/";
+      /*  final String cacheDir = "/Android/data/" + context.getPackageName()
+                + "/cache/";*/
+        final String apkDir =  context.getPackageName()
+                + "/apk/";
         return new File(Environment.getExternalStorageDirectory().getPath()
-                + cacheDir);
+                + apkDir);
     }
 }
