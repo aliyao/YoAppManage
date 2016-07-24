@@ -1,10 +1,12 @@
 package com.yoyo.yoappmanage.module.installed.fragment;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,6 +57,7 @@ import rx.schedulers.Schedulers;
  * 修改备注：
  */
 public class InstalledFragment extends BaseFragment implements OnBaseRecyclerViewListener {
+    // private static final int MY_PERMISSIONS_REQUEST_MOUNT_UNMOUNT_FILESYSTEMS = 1;
     @BindView(R.id.refresh_layout)
     RefreshLayout refreshLayout;
     @BindView(R.id.recycler_view)
@@ -171,7 +174,7 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                     public void onItemClick(DialogInterface dialog, final int which) {
                         switch (which) {
                             case 0:
-                                String packageName=installedAdapter.getItem(position).getPackageName();
+                                String packageName = installedAdapter.getItem(position).getPackageName();
                                 PackageManager packageManager = getActivity().getPackageManager();
                                 Intent intent = new Intent();
                                 intent = packageManager.getLaunchIntentForPackage(packageName);
@@ -181,39 +184,16 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                                 unInstall(installedAdapter.getItem(position));
                                 break;
                             case 1:
-                                installedAdapter.add(installedAdapter.getItem(position).getPackageName());
-                                installedAdapter.notifyDataSetChanged();
-                                Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
-                                    @Override
-                                    public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
-                                        InstalledInfoEntity installedInfoEntity = installedAdapter.getItem(position);
-                                        Bitmap iconBitmap = BitampUtils.drawableToBitamp(installedInfoEntity.getIcon());
-                                        String iconSavePath = FileUtil.getDiskCacheDirIconImgPath(getContext());
-                                        String saveIconBitmapFilePath = BitampUtils.saveBitmapIcon(iconBitmap, iconSavePath);
-                                        CollectInfoEntity collectInfoEntity = InstallCollectTools.InstallToCollectInfo(installedInfoEntity, saveIconBitmapFilePath);
-                                        RxJavaTodoEntity rxJavaTodoEntity = unInstallDelInfo(collectInfoEntity);
-                                        subscriber.onNext(rxJavaTodoEntity);
-                                        subscriber.onCompleted();
-                                    }
-                                })
-                                        .subscribeOn(Schedulers.newThread())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Action1<RxJavaTodoEntity>() {
-                                            @Override
-                                            public void call(RxJavaTodoEntity rxJavaTodoEntity) {
-                                                installedAdapter.remove(installedAdapter.getItem(position).getPackageName());
-                                                installedAdapter.notifyDataSetChanged();
-                                                if (rxJavaTodoEntity == null) {
-                                                    return;
-                                                }
-                                                if (rxJavaTodoEntity.isSuccess()) {
-                                                    refreshAdapter();
-                                                }
-                                                YoSnackbar.showSnackbar(InstalledFragment.this.getView(), rxJavaTodoEntity.getrTipText());
+                                if (ContextCompat.checkSelfPermission(InstalledFragment.this.getContext(),
+                                        Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)
+                                        != PackageManager.PERMISSION_GRANTED) {
 
-
-                                            }
-                                        });
+                                    InstalledFragment.this.requestPermissions(
+                                            new String[]{Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS},
+                                            position);
+                                } else {
+                                    unInstallCollect(position);
+                                }
                                 break;
                         }
 
@@ -221,6 +201,45 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                 }
 
         );
+    }
+
+    public void unInstallCollect(final int position) {
+        if(position>=installedAdapter.getItemCount()){
+            return;
+        }
+        installedAdapter.add(installedAdapter.getItem(position).getPackageName());
+        installedAdapter.notifyDataSetChanged();
+        Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
+            @Override
+            public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
+                InstalledInfoEntity installedInfoEntity = installedAdapter.getItem(position);
+                Bitmap iconBitmap = BitampUtils.drawableToBitamp(installedInfoEntity.getIcon());
+                String iconSavePath = FileUtil.getDiskCacheDirIconImgPath(getContext());
+                String saveIconBitmapFilePath = BitampUtils.saveBitmapIcon(iconBitmap, iconSavePath);
+                CollectInfoEntity collectInfoEntity = InstallCollectTools.InstallToCollectInfo(installedInfoEntity, saveIconBitmapFilePath);
+                RxJavaTodoEntity rxJavaTodoEntity = unInstallDelInfo(collectInfoEntity);
+                subscriber.onNext(rxJavaTodoEntity);
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<RxJavaTodoEntity>() {
+                    @Override
+                    public void call(RxJavaTodoEntity rxJavaTodoEntity) {
+                        installedAdapter.remove(installedAdapter.getItem(position).getPackageName());
+                        installedAdapter.notifyDataSetChanged();
+                        if (rxJavaTodoEntity == null) {
+                            return;
+                        }
+                        if (rxJavaTodoEntity.isSuccess()) {
+                            refreshAdapter();
+                        }
+                        YoSnackbar.showSnackbar(InstalledFragment.this.getView(), rxJavaTodoEntity.getrTipText());
+
+
+                    }
+                });
     }
 
     @Override
@@ -276,6 +295,21 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
 
         }
         return rxJavaTodoEntity;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        if (requestCode > 0 && permissions != null && permissions.length > 0 && permissions[0].equals(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                unInstallCollect(requestCode);
+            } else {
+                // Permission Denied
+                YoSnackbar.showSnackbar(InstalledFragment.this.getView(), R.string.permission_denied);
+            }
+            return;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

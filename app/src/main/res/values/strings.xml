@@ -32,4 +32,6 @@
     <string name="net_error">网络异常</string>
 
     <string name="update_text">检测到新版本，确定更新</string>
+
+    <string name="permission_denied">权限被拒绝</string>
 </resources>
