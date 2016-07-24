@@ -185,11 +185,11 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                                 break;
                             case 1:
                                 if (ContextCompat.checkSelfPermission(InstalledFragment.this.getContext(),
-                                        Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
                                         != PackageManager.PERMISSION_GRANTED) {
 
                                     InstalledFragment.this.requestPermissions(
-                                            new String[]{Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS},
+                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                             position);
                                 } else {
                                     unInstallCollect(position);
@@ -300,7 +300,7 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-        if (requestCode > 0 && permissions != null && permissions.length > 0 && permissions[0].equals(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)) {
+        if (requestCode > 0 && permissions != null && permissions.length > 0 && permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 unInstallCollect(requestCode);
             } else {
