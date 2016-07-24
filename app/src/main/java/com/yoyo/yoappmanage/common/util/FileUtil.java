@@ -23,9 +23,9 @@ import java.io.InputStream;
  * 修改备注：
  */
 public class FileUtil {
-    final static String resPath = AppConfig.appName + "res" + File.separator;
-    final static String apkPath = resPath + "apk" + File.separator;
-    final static String iconImgPath = apkPath + "iconImg"+ File.separator;
+   // final static String resPath = AppConfig.appName + "res" + File.separator;
+    final static String apkPath =  "apk" + File.separator;
+    final static String iconImgPath = apkPath + "icon"+ File.separator;
 
     /**
      * 复制单个文件
@@ -97,13 +97,13 @@ public class FileUtil {
         // Check if media is mounted or storage is built-in, if so, try and use
         // external cache dir
         // otherwise use internal cache dir
-        String rootParh = ACacheUtils.getRootPath(context);
+       /* String rootParh = ACacheUtils.getRootPath(context);
         if (!TextUtils.isEmpty(rootParh)) {
             return rootParh;
-        }
+        }*/
 
         final String cachePath = Environment.MEDIA_MOUNTED.equals(Environment
-                .getExternalStorageState()) || !isExternalStorageRemovable() ? getExternalApkDir(
+                .getExternalStorageState()) || !isExternalStorageRemovable() ? getExternalDir(
                 context).getPath()
                 : context.getCacheDir().getPath();
 
@@ -118,16 +118,15 @@ public class FileUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public static File getExternalApkDir(Context context) {
-        if (Utils.hasFroyo()) {
-            return context.getExternalCacheDir();
-        }
+    public static File getExternalDir(Context context) {
+       // if (Utils.hasFroyo()) {
+         //   return context.getExternalCacheDir();
+        //}
 
         // Before Froyo we need to construct the external cache dir ourselves
       /*  final String cacheDir = "/Android/data/" + context.getPackageName()
                 + "/cache/";*/
-        final String apkDir =  context.getPackageName()
-                + "/apk/";
+        final String apkDir =File.separator+context.getPackageName();
         return new File(Environment.getExternalStorageDirectory().getPath()
                 + apkDir);
     }

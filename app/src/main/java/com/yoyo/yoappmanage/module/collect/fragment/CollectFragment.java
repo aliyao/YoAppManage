@@ -148,12 +148,13 @@ public class CollectFragment extends BaseFragment implements OnBaseRecyclerViewL
     }
 
     @Override
-    public void onItemClick(int position) {
+    public boolean onItemLongClick(int position) {
 
+        return false;
     }
 
     @Override
-    public boolean onItemLongClick(final int position) {
+    public void onItemClick(final int position) {
         String[] toDo = getContext().getResources().getStringArray(R.array.alert_dialog_list_todo_collect_item_long_click);
         AlertDialogUtils.showAlertDialogList(getContext(), toDo, new OnToDoItemClickListener() {
 
@@ -191,7 +192,6 @@ public class CollectFragment extends BaseFragment implements OnBaseRecyclerViewL
                     }
                 }
         );
-        return false;
     }
 
     private RxJavaTodoEntity install(CollectInfoEntity collectInfoEntity) {

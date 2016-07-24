@@ -1,8 +1,9 @@
 package com.yoyo.yoappmanage.module.installed.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -162,33 +163,35 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
     }
 
     @Override
-    public void onItemClick(int position) {
-
-    }
-
-    @Override
-    public boolean onItemLongClick(final int position) {
+    public void onItemClick(final int position) {
         String[] toDo = getContext().getResources().getStringArray(R.array.alert_dialog_list_todo_installed_item_long_click);
         AlertDialogUtils.showAlertDialogList(getContext(), toDo, new OnToDoItemClickListener() {
 
                     @Override
                     public void onItemClick(DialogInterface dialog, final int which) {
                         switch (which) {
-                            case 1:
+                            case 0:
+                                String packageName=installedAdapter.getItem(position).getPackageName();
+                                PackageManager packageManager = getActivity().getPackageManager();
+                                Intent intent = new Intent();
+                                intent = packageManager.getLaunchIntentForPackage(packageName);
+                                startActivity(intent);
+                                break;
+                            case 2:
                                 unInstall(installedAdapter.getItem(position));
                                 break;
-                            case 0:
+                            case 1:
                                 installedAdapter.add(installedAdapter.getItem(position).getPackageName());
                                 installedAdapter.notifyDataSetChanged();
                                 Observable.create(new Observable.OnSubscribe<RxJavaTodoEntity>() {
                                     @Override
                                     public void call(Subscriber<? super RxJavaTodoEntity> subscriber) {
-                                        InstalledInfoEntity installedInfoEntity=installedAdapter.getItem(position);
-                                        Bitmap iconBitmap= BitampUtils.drawableToBitamp(installedInfoEntity.getIcon());
-                                        String iconSavePath=FileUtil.getDiskCacheDirIconImgPath(getContext());
-                                        String saveIconBitmapFilePath=BitampUtils.saveBitmapIcon(iconBitmap,iconSavePath);
-                                        CollectInfoEntity collectInfoEntity=InstallCollectTools.InstallToCollectInfo(installedInfoEntity,saveIconBitmapFilePath);
-                                        RxJavaTodoEntity  rxJavaTodoEntity = unInstallDelInfo(collectInfoEntity);
+                                        InstalledInfoEntity installedInfoEntity = installedAdapter.getItem(position);
+                                        Bitmap iconBitmap = BitampUtils.drawableToBitamp(installedInfoEntity.getIcon());
+                                        String iconSavePath = FileUtil.getDiskCacheDirIconImgPath(getContext());
+                                        String saveIconBitmapFilePath = BitampUtils.saveBitmapIcon(iconBitmap, iconSavePath);
+                                        CollectInfoEntity collectInfoEntity = InstallCollectTools.InstallToCollectInfo(installedInfoEntity, saveIconBitmapFilePath);
+                                        RxJavaTodoEntity rxJavaTodoEntity = unInstallDelInfo(collectInfoEntity);
                                         subscriber.onNext(rxJavaTodoEntity);
                                         subscriber.onCompleted();
                                     }
@@ -218,6 +221,11 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
                 }
 
         );
+    }
+
+    @Override
+    public boolean onItemLongClick(final int position) {
+
         return false;
     }
 
@@ -248,7 +256,7 @@ public class InstalledFragment extends BaseFragment implements OnBaseRecyclerVie
             }
             String apkFilePath = FileUtil.getDiskCacheDirApkPath(getActivity());
             boolean isCopySuccess = FileUtil.copyFile(apkSystemPath, apkFilePath, apkSystemFileName);
-            String apkFile = FileUtil.getDiskCacheDirApkPath(getActivity())+apkSystemFileName;
+            String apkFile = FileUtil.getDiskCacheDirApkPath(getActivity()) + apkSystemFileName;
             if (!isCopySuccess) {
                 return rxJavaTodoEntity;
             }

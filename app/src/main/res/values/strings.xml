@@ -12,6 +12,7 @@
     <string name="btn_cancle">取消</string>
 
     <string-array name="alert_dialog_list_todo_installed_item_long_click">
+        <item>打开</item>
         <item>卸载收藏</item>
         <item>卸载</item>
     </string-array>
